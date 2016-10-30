@@ -1,0 +1,20 @@
+# clean
+delete ~%here%/boot/boot-tool/boot~;
+delete ~%here%/boot/boot-tool/boot.img~;
+
+# unpack
+copy ~%rom%/boot.img~ ~%here%/boot/boot-tool/boot.img~;
+runscript ~call %here%/boot/boot-tool/unpack.bat ~%here%/boot/boot-tool/boot.img~;
+
+# edit
+copy ~%here%/boot/kernel~ ~%here%/boot/boot-tool/boot/boot.img-kernel~;
+copy ~%here%/boot/ramdisk~ ~%here%/boot/boot-tool/boot/ramdisk~;
+replaceinfile ~%here%/boot/boot-tool/boot/ramdisk/init.mt6582_common.rc~ ~#Camera~ ~#Camera\n    chmod 0660 /dev/camera-sysram\n    chmod 0660 /dev/camera-isp\n    chmod 0660 /dev/camera-pipemgr\n    chmod 0660 /dev/kd_camera_hw\n    chmod 0660 /dev/kd_camera_flashlight\n    chmod 0660 /dev/kd_camera_hw_bus2\n    chmod 0660 /dev/FM50AF\n    chmod 0660 /dev/OV5648AF\n    chmod 0660 /dev/OV5670AF\n   chmod 0660 /dev/GC5004AF\n    chmod 0660 /dev/A5142AF\n    chmod 0660 /dev/A5143AF\n    chmod 0660 /dev/CAM_CAL_DRV\n~;
+
+# pack
+runscript ~call %here%/boot/boot-tool/repack.bat ~%here%/boot/boot-tool/boot~;
+copy ~%here%/boot/boot-tool/new_boot.img~ ~%rom%/boot.img~;
+
+# clean
+delete ~%here%/boot/boot-tool/boot~;
+delete ~%here%/boot/boot-tool/boot.img~;
